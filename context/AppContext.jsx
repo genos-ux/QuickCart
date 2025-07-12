@@ -1,6 +1,6 @@
 'use client'
 import { productsDummyData, userDummyData } from "@/assets/assets";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -40,11 +40,14 @@ export const AppContextProvider = (props) => {
 
             if(data.success){
                 setUserData(data.user);
+                setCartItems(data.user.cartItems)
+            }else{
+                toast.error(data.message);
             }
 
-            setUserData(userDummyData);
+            // setUserData(userDummyData);
         } catch (error) {
-            
+            toast.error(error.message);
         }
     }
 
