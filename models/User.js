@@ -1,5 +1,4 @@
-import { Schema } from "mongoose"
-import { unique } from "next/dist/build/utils"
+import { model, models, Schema } from "mongoose"
 
 const userSchema = new Schema({
     _id: {
@@ -14,5 +13,17 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    imageUrl: {
+        type: String,
+        required: true
+    },
+    cartItems: {
+        type:Object, 
+        default: {}
     }
-})
+},{ minimize: false })
+
+const User = models.user ||  model('user',userSchema);
+
+export default User;
