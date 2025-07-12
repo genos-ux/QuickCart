@@ -16,14 +16,10 @@ export async function POST(request) {
       }
 
       // Fetch all products in parallel and compute total
-      const amounts = await Promise.all(
-        items.map(async (item) => {
-          const product = await Product.findById(item.product);
-          return product.offerPrice * item.quantity;
-        })
-      );
-
-      const amount = amounts.reduce((sum, val) => sum + val, 0);
+      const amount = await items.reduce(async(acc,item) => {
+        const product = await Product.findById(item.product);
+        return await acc + product.offerPrice * item.quantity;
+      }, 0)
 
       await inngest.send({
         name: "order/created",
