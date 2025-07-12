@@ -1,4 +1,4 @@
-import { Schema } from "mongoose"
+import { model, models, Schema } from "mongoose"
 
 
 const orderSchema = Schema({
@@ -13,6 +13,6 @@ const orderSchema = Schema({
     date: { type: Number, required: true}
 })
 
-const Order = models.order || mongoose.model('order',orderSchema);
+const Order = models.order || model('order',orderSchema);
 
 export default Order;
